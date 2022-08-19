@@ -12,6 +12,17 @@ provider "aws" {
   region = "us-west-2"
 }
 
+resource "aws_security_group" "capsg" {
+  name = "cap-server-group"
+
+  ingress {
+    from_port        = 8080
+    to_port          = 8080
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_instance" "cap-server" {
   ami           = "ami-005e54dee72cc1d00" # us-west-2
   instance_type = "t2.micro"
@@ -29,13 +40,3 @@ resource "aws_instance" "cap-server" {
 
 }
 
-resource "aws_security_group" "capsg" {
-  name = "cap-server-group"
-
-  ingress {
-    from_port        = 8080
-    to_port          = 8080
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
-  }
-}
