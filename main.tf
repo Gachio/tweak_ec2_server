@@ -15,6 +15,7 @@ provider "aws" {
 resource "aws_instance" "cap-server" {
   ami           = "ami-005e54dee72cc1d00" # us-west-2
   instance_type = "t2.micro"
+  vpc_security_group_ids = [aws_security_group.capsg.id]
 
   user_data = <<-EOF
                 #!/usr/bin/env bash
@@ -28,7 +29,7 @@ resource "aws_instance" "cap-server" {
 
 }
 
-resource "aws_security_group" "instance" {
+resource "aws_security_group" "capsg" {
   name = "cap-server-group"
 
   ingress {
